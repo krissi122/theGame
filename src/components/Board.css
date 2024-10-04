@@ -28,6 +28,12 @@
     bottom: 10vh;
 }
 
+.hide_box {
+    bottom: 11vh;
+    border-style: solid;
+    border-color: black 4px;
+}
+
 #card_1 {
     left: 5vw;
     background-image: url('/public/images/Card1.jpg');
@@ -35,22 +41,11 @@
     background-position: center;
 }
 
-.not_playable {
+
+#not_playable_1 {
     position: absolute;
     bottom: 12vh;
     left: 6vw;
-    border-style: double;
-    border-color: gray;
-    height: 21vh;
-    width: 8vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 12vh;
-    font-weight: 400;
-    background-color: gray;
-    opacity: 50%;
 }
 
 #card_2 {
@@ -139,6 +134,14 @@
 
 #refill_cards_button {
     top: 26vh;
+    background-image: url('/public/images/Button1.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#undo_button {
+    top: 40vh;
+    right: 85vw;
     background-image: url('/public/images/Button1.jpg');
     background-size: cover;
     background-position: center;

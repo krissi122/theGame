@@ -5,6 +5,7 @@ import IncreaseMat from "./IncreaseMat";
 import DecreaseMat from "./DecreaseMat";
 import './Board.css';
 import PropTypes from 'prop-types';
+import NotPlayable from '../NotPlayable';
 
 const Board = () => {
     const [deckMessage, setDeckMessage] = useState('The game has not started.');
@@ -16,6 +17,11 @@ const Board = () => {
     const tempDeck = Array.from({ length: 98 }, (_, i) => i + 2)
     let [deck, setDeck] = useState(tempDeck)
     let [playedCardCounter, setPlayedCardCounter] = useState(0)
+    const [hideCard, setHideCard] = useState(false)
+    const [lastMatPlayed, setLastMatPlayed] = useState(null)
+    const [lastCardPlayedOn, setLastCardPlayedOn] = useState(null)
+    const [lastCardPlayed, setLastCardPlayed] = useState(null)
+    let [undoCounter, setUndoCounter] = useState(0)
 
     const shuffleDeck = () => {
         let currentIndex = deck.length;
@@ -32,7 +38,7 @@ const Board = () => {
     const startGame = () => {
         shuffleDeck()
         const newCardValues = [deck[0], deck[1], deck[2], deck[3], deck[4], deck[5], deck[6]];
-        newCardValues.sort((a,b) => a - b)
+        newCardValues.sort((a, b) => a - b)
         setCards(newCardValues);
         deck.splice(0, 7)
         setDeckMessage(`Remaining Cards ${deck.length}`);
@@ -40,13 +46,15 @@ const Board = () => {
 
     const resetGame = () => {
         deck = Array.from({ length: 98 }, (_, i) => i + 2)
+        setDeck(deck)
         shuffleDeck()
         const newCardValues = [deck[0], deck[1], deck[2], deck[3], deck[4], deck[5], deck[6]];
-        newCardValues.sort((a,b) => a - b)
+        newCardValues.sort((a, b) => a - b)
         setCards(newCardValues);
         setMats([1, 1, 100, 100])
         deck.splice(0, 7)
         setDeckMessage(`Reset game. Remaining Cards ${deck.length}`);
+        console.log(deck)
     }
 
     const refillCards = () => {
@@ -54,12 +62,12 @@ const Board = () => {
             let deckCounter = 0
             for (let i = 0; i < cards.length; i++) {
                 if (cards[i] == ' ') {
-                    cards[i] = deck[deckCounter++]
+                    cards[i] = deck[deckCounter++] ?? '_'
                 }
             }
             deck.splice(0, deckCounter)
-            cards.sort((a,b) => a-b)
-            if(deck.length === 0) {
+            cards.sort((a, b) => a - b)
+            if (deck.length === 0) {
                 alert('You won!')
             } else {
                 setDeckMessage(`Remaining Cards ${deck.length}`);
@@ -74,9 +82,11 @@ const Board = () => {
         return false
     }
 
-    const handleCardClick = (value) => {
-        setSelectedCard(cards[value])
-        setSelectedCardIndex(value)
+    const handleCardClick = (cardValue, matIndex) => {
+        console.log(undoCounter)
+        setSelectedCard(cards[cardValue])
+        setSelectedCardIndex(cardValue)
+        setLastMatPlayed(matIndex)
     }
 
     const tryApplyIncreasingValue = (selectedCardIndex, matValueIndex) => {
@@ -87,15 +97,23 @@ const Board = () => {
         } else if (selectedCard > matCard) {
             mats[matValueIndex] = selectedCard
             cards[selectedCardIndex] = ' '
-            setPlayedCardCounter(playedCardCounter+=1)
+            setLastCardPlayed(selectedCard)
+            setLastCardPlayedOn(matCard)
+            setLastMatPlayed(matValueIndex)
+            setPlayedCardCounter(playedCardCounter += 1)
+            setUndoCounter(0)
         } else if ((matCard - 10) === selectedCard) {
             mats[matValueIndex] = selectedCard
             cards[selectedCardIndex] = ' '
-            setPlayedCardCounter(playedCardCounter+=1)
+            setLastCardPlayed(selectedCard)
+            setPlayedCardCounter(playedCardCounter += 1)
+            setLastCardPlayedOn(matCard)
+            setLastMatPlayed(matValueIndex)
+            setUndoCounter(0)
         } else {
             alert(`This is not a valid card to play. Please a card that is greater than ${matCard} or ${mats[matValueIndex] - 10}`)
         }
-        handleCardClick(selectedCardIndex)
+        handleCardClick(selectedCardIndex, matValueIndex)
 
     }
 
@@ -107,16 +125,54 @@ const Board = () => {
         } else if (selectedCard < matCard) {
             mats[matValueIndex] = selectedCard
             cards[selectedCardIndex] = ' '
-            setPlayedCardCounter(playedCardCounter+=1)
+            setLastCardPlayedOn(matCard)
+            setPlayedCardCounter(playedCardCounter += 1)
+            setLastMatPlayed(matValueIndex)
+            setLastCardPlayed(selectedCard)
+            setUndoCounter(0)
         } else if ((matCard + 10) === selectedCard) {
             mats[matValueIndex] = selectedCard
             cards[selectedCardIndex] = ' '
-            setPlayedCardCounter(playedCardCounter+=1)
+            setPlayedCardCounter(playedCardCounter += 1)
+            setLastCardPlayedOn(matCard)
+            setLastMatPlayed(matValueIndex)
+            setLastCardPlayed(selectedCard)
+            setUndoCounter(0)
         } else {
             alert(`This is not a valid card to play. Please a card that is less than ${matCard} or ${mats[matValueIndex] + 10}`)
         }
 
-        handleCardClick(selectedCardIndex)
+        handleCardClick(selectedCardIndex, matValueIndex)
+    }
+
+    const isCardPlayable = (card) => {
+        if (card < mats[0] || card !== mats[0] - 10) {
+            return true
+        }
+        if (card < mats[1] || card !== mats[1] - 10) {
+            return true
+        }
+        if (card > mats[2] || card !== mats[2] + 10) {
+            return true
+        }
+        if (card > mats[3] || card !== mats[3] - 10) {
+            return true
+        }
+        return false
+    }
+
+    const undoLastMove = () => {
+        console.log(undoCounter)
+        if(undoCounter < 1) {
+            cards[selectedCardIndex] = lastCardPlayed
+            mats[lastMatPlayed] = lastCardPlayedOn
+            handleCardClick(selectedCardIndex, lastMatPlayed)
+            setUndoCounter(1)
+        } else {
+            console.log('here')
+            alert('You can only undo once!')
+        }
+
     }
 
     return (
@@ -137,15 +193,18 @@ const Board = () => {
             <div className="card_" id="card_7" onClick={() => handleCardClick(6)} > <Card card={cards[6]} /> </div>
 
 
-            <div className="mats_" id='increase_one' onClick={() => tryApplyIncreasingValue(selectedCardIndex, 0)} > <IncreaseMat value={mats[0]}/> </div>
-            <div className="mats_" id='increase_two' onClick={() => tryApplyIncreasingValue(selectedCardIndex, 1)} > <IncreaseMat value={mats[1]}/> </div>
-            <div className="mats_" id='decrease_one' onClick={() => tryApplyDecreasingValue(selectedCardIndex, 2)} > <DecreaseMat value={mats[2]}/> </div>
-            <div className="mats_" id='decrease_two' onClick={() => tryApplyDecreasingValue(selectedCardIndex, 3)} > <DecreaseMat value={mats[3]}/> </div>
+            <div className="mats_" id='increase_one' onClick={() => tryApplyIncreasingValue(selectedCardIndex, 0)} > <IncreaseMat value={mats[0]} /> </div>
+            <div className="mats_" id='increase_two' onClick={() => tryApplyIncreasingValue(selectedCardIndex, 1)} > <IncreaseMat value={mats[1]} /> </div>
+            <div className="mats_" id='decrease_one' onClick={() => tryApplyDecreasingValue(selectedCardIndex, 2)} > <DecreaseMat value={mats[2]} /> </div>
+            <div className="mats_" id='decrease_two' onClick={() => tryApplyDecreasingValue(selectedCardIndex, 3)} > <DecreaseMat value={mats[3]} /> </div>
 
 
             <input type='button' className='game_button' id='start_game_button' onClick={startGame} value='Start Game' />
             <input type='button' className='game_button' id='reset_game_button' onClick={resetGame} value='Reset Game' />
             <input type='button' className='game_button' id='refill_cards_button' onClick={refillCards} value='Refill Cards' />
+            <input type='button' className='game_button' id='undo_button' onClick={undoLastMove} value="undo" />
+
+            
         </section>
     );
 };
