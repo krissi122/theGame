@@ -12,7 +12,7 @@ const Card = ({ card }) => {
 Card.propTypes = {
     card: PropTypes.oneOfType([
         PropTypes.number,
-        PropTypes.oneOf(['*'])
+        PropTypes.oneOf([' '])
     ]).isRequired
 };
 

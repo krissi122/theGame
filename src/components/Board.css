@@ -35,6 +35,24 @@
     background-position: center;
 }
 
+.not_playable {
+    position: absolute;
+    bottom: 12vh;
+    left: 6vw;
+    border-style: double;
+    border-color: gray;
+    height: 21vh;
+    width: 8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12vh;
+    font-weight: 400;
+    background-color: gray;
+    opacity: 50%;
+}
+
 #card_2 {
     left: 18vw;
     background-image: url('/public/images/Card2.jpg');

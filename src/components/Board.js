@@ -32,6 +32,7 @@ const Board = () => {
     const startGame = () => {
         shuffleDeck()
         const newCardValues = [deck[0], deck[1], deck[2], deck[3], deck[4], deck[5], deck[6]];
+        newCardValues.sort((a,b) => a - b)
         setCards(newCardValues);
         deck.splice(0, 7)
         setDeckMessage(`Remaining Cards ${deck.length}`);
@@ -41,6 +42,7 @@ const Board = () => {
         deck = Array.from({ length: 98 }, (_, i) => i + 2)
         shuffleDeck()
         const newCardValues = [deck[0], deck[1], deck[2], deck[3], deck[4], deck[5], deck[6]];
+        newCardValues.sort((a,b) => a - b)
         setCards(newCardValues);
         setMats([1, 1, 100, 100])
         deck.splice(0, 7)
@@ -51,37 +53,44 @@ const Board = () => {
         if (playedCardCounter >= 2) {
             let deckCounter = 0
             for (let i = 0; i < cards.length; i++) {
-                if (cards[i] == '*') {
+                if (cards[i] == ' ') {
                     cards[i] = deck[deckCounter++]
                 }
             }
             deck.splice(0, deckCounter)
-            setDeckMessage(`Remaining Cards ${deck.length}`);
+            cards.sort((a,b) => a-b)
+            if(deck.length === 0) {
+                alert('You won!')
+            } else {
+                setDeckMessage(`Remaining Cards ${deck.length}`);
+            }
             setPlayedCardCounter(0)
         } else {
             alert(`You need to play at least two cards. You\'ve only played ${playedCardCounter} cards`)
         }
     };
 
+    const checkIfCardIsPlayable = () => {
+        return false
+    }
+
     const handleCardClick = (value) => {
-        console.log(`current value ${cards[value]}`)
         setSelectedCard(cards[value])
         setSelectedCardIndex(value)
     }
 
     const tryApplyIncreasingValue = (selectedCardIndex, matValueIndex) => {
-        console.log('trying to apply increase')
         let selectedCard = cards[selectedCardIndex]
         let matCard = mats[matValueIndex]
-        if (selectedCard === '*') {
-            console.log('do nothing')
+        if (selectedCard === ' ') {
+            alert('not playable!')
         } else if (selectedCard > matCard) {
             mats[matValueIndex] = selectedCard
-            cards[selectedCardIndex] = '*'
+            cards[selectedCardIndex] = ' '
             setPlayedCardCounter(playedCardCounter+=1)
         } else if ((matCard - 10) === selectedCard) {
             mats[matValueIndex] = selectedCard
-            cards[selectedCardIndex] = '*'
+            cards[selectedCardIndex] = ' '
             setPlayedCardCounter(playedCardCounter+=1)
         } else {
             alert(`This is not a valid card to play. Please a card that is greater than ${matCard} or ${mats[matValueIndex] - 10}`)
@@ -93,15 +102,15 @@ const Board = () => {
     const tryApplyDecreasingValue = (selectedCardIndex, matValueIndex) => {
         let selectedCard = cards[selectedCardIndex]
         let matCard = mats[matValueIndex]
-        if (selectedCard === '*') {
-            console.log('do nothing')
+        if (selectedCard === ' ') {
+            alert('not playable!')
         } else if (selectedCard < matCard) {
             mats[matValueIndex] = selectedCard
-            cards[selectedCardIndex] = '*'
+            cards[selectedCardIndex] = ' '
             setPlayedCardCounter(playedCardCounter+=1)
         } else if ((matCard + 10) === selectedCard) {
             mats[matValueIndex] = selectedCard
-            cards[selectedCardIndex] = '*'
+            cards[selectedCardIndex] = ' '
             setPlayedCardCounter(playedCardCounter+=1)
         } else {
             alert(`This is not a valid card to play. Please a card that is less than ${matCard} or ${mats[matValueIndex] + 10}`)
