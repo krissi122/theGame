@@ -1,0 +1,127 @@
+.board_background {
+    background-color: silver;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: #000000 2px;
+    height: auto;
+    min-height: 100vh;
+    border-style: solid;
+    margin: 5px;
+    width: auto;
+    min-width: 100vw;
+    position: relative;
+}
+
+.rules {
+    font-size: small;
+    min-width: 5w;
+    width: 10vw;
+    position: absolute;
+    left: 5vw;
+    top: 8vw;
+}
+
+.card_ {
+    position: absolute;
+    bottom: 10vh;
+}
+
+#card_1 {
+    left: 5vw;
+    background-image: url('/public/images/Card1.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#card_2 {
+    left: 18vw;
+    background-image: url('/public/images/Card2.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#card_3 {
+    left: 31vw;
+    background-image: url('/public/images/Card3.jpg');
+    background-size: cover;
+    background-position: center;
+}
+#card_4 {
+    left: 44vw;
+    background-image: url('/public/images/Card4.jpg');
+    background-size: cover;
+    background-position: center;
+}
+#card_5 {
+    left: 57vw;
+    background-image: url('/public/images/Card5.jpg');
+    background-size: cover;
+    background-position: center;
+}
+#card_6 {
+    left: 70vw;
+    background-image: url('/public/images/Card6.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#card_7 {
+    left: 83vw;
+    background-image: url('/public/images/Card7.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.mats_ {
+    position: absolute;
+    top: 20vh;
+}
+
+#increase_one {
+    left: 20vw;
+}
+
+#increase_two {
+    left: 35vw;
+}
+
+#decrease_one {
+    left: 50vw;
+}
+
+#decrease_two {
+    left: 65vw;
+}
+
+.game_button {
+    font-family: 'Courier New', Courier, monospace;
+    height: 5vh;
+    width: 10vw;
+    border-style: double;
+    border-color: gray;
+    right: 7vw;
+    position:absolute;
+}
+
+#start_game_button {
+    top: 10vh;
+    background-image: url('/public/images/Button1.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#reset_game_button {
+    top: 18vh;
+    background-image: url('/public/images/Button2.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#refill_cards_button {
+    top: 26vh;
+    background-image: url('/public/images/Button1.jpg');
+    background-size: cover;
+    background-position: center;
+}

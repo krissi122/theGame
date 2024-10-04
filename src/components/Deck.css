@@ -1,0 +1,20 @@
+.deck {
+    border-style: double;
+    border-color: gray;
+    background-image: url('/public/images/Deck.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 12vw;
+    height: 22vh;
+    display: inline-block;
+    padding: 5px;
+    position: absolute;
+    bottom: 40vh;
+    right: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3vh;
+    font-weight: 300;
+}

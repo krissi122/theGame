@@ -1,0 +1,12 @@
+.card {
+    border-style: double;
+    border-color: gray;
+    height: 25vh;
+    width: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 6vh;
+    font-weight: 300;
+}
