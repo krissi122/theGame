@@ -54,7 +54,6 @@ const Board = () => {
         setMats([1, 1, 100, 100])
         deck.splice(0, 7)
         setDeckMessage(`Reset game. Remaining Cards ${deck.length}`);
-        console.log(deck)
     }
 
     const refillCards = () => {
@@ -83,7 +82,6 @@ const Board = () => {
     }
 
     const handleCardClick = (cardValue, matIndex) => {
-        console.log(undoCounter)
         setSelectedCard(cards[cardValue])
         setSelectedCardIndex(cardValue)
         setLastMatPlayed(matIndex)
@@ -162,14 +160,12 @@ const Board = () => {
     }
 
     const undoLastMove = () => {
-        console.log(undoCounter)
         if(undoCounter < 1) {
             cards[selectedCardIndex] = lastCardPlayed
             mats[lastMatPlayed] = lastCardPlayedOn
             handleCardClick(selectedCardIndex, lastMatPlayed)
             setUndoCounter(1)
         } else {
-            console.log('here')
             alert('You can only undo once!')
         }
 
