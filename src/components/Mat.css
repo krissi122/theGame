@@ -12,7 +12,7 @@
 #increase_mat {
     border-style: double;
     border-color: gray;
-    background-image: url('/public/images/Increase_Mat.jpg');
+    background-image: url('/public/images/IncreaseMat.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -20,7 +20,7 @@
 #decrease_mat {
     border-style: double;
     border-color: gray;
-    background-image: url('/public/images/Decrease_Mat.jpg');
+    background-image: url('/public/images/DecreaseMat.jpg');
     background-size: cover;
     background-position: center;
     width: 13vw;
