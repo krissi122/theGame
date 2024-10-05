@@ -198,7 +198,7 @@ const Board = () => {
 
             <input type='button' className='game_button' id='start_game_button' onClick={startGame} value='Start Game' />
             <input type='button' className='game_button' id='reset_game_button' onClick={resetGame} value='Reset Game' />
-            <input type='button' className='game_button' id='undo_button' onClick={undoLastMove} value="undo" />
+            <input type='button' className='game_button' id='undo_button' onClick={undoLastMove} value="Undo Last Card" />
 
 
         </section>
