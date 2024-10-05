@@ -163,6 +163,15 @@ const Board = () => {
 
     }
 
+    // // check if all are not playable-- this is buggy
+    // let playableCardsLeft = true
+    // for(let i = 0; i < cards.length; i++) {
+    //     if(cardIsNotPlayable(cards[i]) === false) continue
+    //     playableCardsLeft = false
+    // }
+    // if(!playableCardsLeft) alert('game over!')
+    
+
     return (
         <section className="board_background">
             <div className="rules">
