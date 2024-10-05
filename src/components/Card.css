@@ -1,8 +1,21 @@
 .card {
-    border-style: double;
-    border-color: gray;
     height: 25vh;
     width: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 6vh;
+    font-weight: 300;
+}
+
+.not_playable {
+    height: 21vh;
+    width: 8vw;
+    border-style: double;
+    border-color: gray;
+    background-color: gray;
+    opacity: 50%;
     display: flex;
     justify-content: center;
     align-items: center;

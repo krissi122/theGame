@@ -10,25 +10,13 @@
 }
 
 #increase_mat {
-    border-style: double;
-    border-color: gray;
     background-image: url('/public/images/IncreaseMat.jpg');
     background-size: cover;
     background-position: center;
 }
 
 #decrease_mat {
-    border-style: double;
-    border-color: gray;
     background-image: url('/public/images/DecreaseMat.jpg');
     background-size: cover;
     background-position: center;
-    width: 13vw;
-    height: 25vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 6vh;
-    font-weight: 300;
 }

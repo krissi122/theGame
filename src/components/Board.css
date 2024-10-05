@@ -1,5 +1,5 @@
 .board_background {
-    background-color: silver;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,6 +26,7 @@
 .card_ {
     position: absolute;
     bottom: 10vh;
+    border-radius: 25px;
 }
 
 .hide_box {
@@ -39,13 +40,6 @@
     background-image: url('/public/images/Card1.jpg');
     background-size: cover;
     background-position: center;
-}
-
-
-#not_playable_1 {
-    position: absolute;
-    bottom: 12vh;
-    left: 6vw;
 }
 
 #card_2 {
@@ -90,6 +84,8 @@
 .mats_ {
     position: absolute;
     top: 20vh;
+    border-radius: 25px;
+    overflow: hidden;
 }
 
 #increase_one {
@@ -116,6 +112,7 @@
     border-color: gray;
     right: 7vw;
     position:absolute;
+    border-radius: 10px;
 }
 
 #start_game_button {
@@ -132,16 +129,8 @@
     background-position: center;
 }
 
-#refill_cards_button {
-    top: 26vh;
-    background-image: url('/public/images/Button1.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
 #undo_button {
-    top: 40vh;
-    right: 85vw;
+    top: 26vh;
     background-image: url('/public/images/Button1.jpg');
     background-size: cover;
     background-position: center;

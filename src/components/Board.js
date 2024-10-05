@@ -5,7 +5,6 @@ import IncreaseMat from "./IncreaseMat";
 import DecreaseMat from "./DecreaseMat";
 import './Board.css';
 import PropTypes from 'prop-types';
-import NotPlayable from '../NotPlayable';
 
 const Board = () => {
     const [deckMessage, setDeckMessage] = useState('The game has not started.');
@@ -77,10 +76,6 @@ const Board = () => {
         }
     };
 
-    const checkIfCardIsPlayable = () => {
-        return false
-    }
-
     const handleCardClick = (cardValue, matIndex) => {
         setSelectedCard(cards[cardValue])
         setSelectedCardIndex(cardValue)
@@ -143,24 +138,21 @@ const Board = () => {
         handleCardClick(selectedCardIndex, matValueIndex)
     }
 
-    const isCardPlayable = (card) => {
-        if (card < mats[0] || card !== mats[0] - 10) {
-            return true
+    const cardIsNotPlayable = (card) => {
+        if (card > mats[0] || card === mats[0] - 10) {
+            return false
+        } else if (card > mats[1] || card === mats[1] - 10) {
+            return false
+        } else if (card < mats[2] || card === mats[2] + 10) {
+            return false
+        } else if (card < mats[3] || card === mats[3] - 10) {
+            return false
         }
-        if (card < mats[1] || card !== mats[1] - 10) {
-            return true
-        }
-        if (card > mats[2] || card !== mats[2] + 10) {
-            return true
-        }
-        if (card > mats[3] || card !== mats[3] - 10) {
-            return true
-        }
-        return false
+        return true
     }
 
     const undoLastMove = () => {
-        if(undoCounter < 1) {
+        if (undoCounter < 1) {
             cards[selectedCardIndex] = lastCardPlayed
             mats[lastMatPlayed] = lastCardPlayedOn
             handleCardClick(selectedCardIndex, lastMatPlayed)
@@ -176,17 +168,17 @@ const Board = () => {
             <div className="rules">
                 You may only place cards that are greater than the previous card in the ascending deck, and cards less than the previous in the descending deck. The exception to this is if the value of your card is exactly +/- 10 of the topmost card on the pile.
             </div>
-            <div>
+            <div onClick={refillCards}>
                 <Deck id="deck" message={deckMessage} />
             </div>
 
-            <div className="card_" id="card_1" onClick={() => handleCardClick(0)} > <Card card={cards[0]} /> </div>
-            <div className="card_" id="card_2" onClick={() => handleCardClick(1)} > <Card card={cards[1]} /> </div>
-            <div className="card_" id="card_3" onClick={() => handleCardClick(2)} > <Card card={cards[2]} /> </div>
-            <div className="card_" id="card_4" onClick={() => handleCardClick(3)} > <Card card={cards[3]} /> </div>
-            <div className="card_" id="card_5" onClick={() => handleCardClick(4)} > <Card card={cards[4]} /> </div>
-            <div className="card_" id="card_6" onClick={() => handleCardClick(5)} > <Card card={cards[5]} /> </div>
-            <div className="card_" id="card_7" onClick={() => handleCardClick(6)} > <Card card={cards[6]} /> </div>
+            <div className="card_" id="card_1" onClick={() => handleCardClick(0)} > <Card card={cards[0]} hideCard={cardIsNotPlayable(cards[0])} /> </div>
+            <div className="card_" id="card_2" onClick={() => handleCardClick(1)} > <Card card={cards[1]} hideCard={cardIsNotPlayable(cards[1])} /> </div>
+            <div className="card_" id="card_3" onClick={() => handleCardClick(2)} > <Card card={cards[2]} hideCard={cardIsNotPlayable(cards[2])} /> </div>
+            <div className="card_" id="card_4" onClick={() => handleCardClick(3)} > <Card card={cards[3]} hideCard={cardIsNotPlayable(cards[3])} /> </div>
+            <div className="card_" id="card_5" onClick={() => handleCardClick(4)} > <Card card={cards[4]} hideCard={cardIsNotPlayable(cards[4])} /> </div>
+            <div className="card_" id="card_6" onClick={() => handleCardClick(5)} > <Card card={cards[5]} hideCard={cardIsNotPlayable(cards[5])} /> </div>
+            <div className="card_" id="card_7" onClick={() => handleCardClick(6)} > <Card card={cards[6]} hideCard={cardIsNotPlayable(cards[6])} /> </div>
 
 
             <div className="mats_" id='increase_one' onClick={() => tryApplyIncreasingValue(selectedCardIndex, 0)} > <IncreaseMat value={mats[0]} /> </div>
@@ -197,10 +189,9 @@ const Board = () => {
 
             <input type='button' className='game_button' id='start_game_button' onClick={startGame} value='Start Game' />
             <input type='button' className='game_button' id='reset_game_button' onClick={resetGame} value='Reset Game' />
-            <input type='button' className='game_button' id='refill_cards_button' onClick={refillCards} value='Refill Cards' />
             <input type='button' className='game_button' id='undo_button' onClick={undoLastMove} value="undo" />
 
-            
+
         </section>
     );
 };
